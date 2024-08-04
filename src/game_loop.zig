@@ -105,22 +105,4 @@ fn update(core: *mach.Core.Mod, game: *Mod) !void {
     core.state().queue.submit(&[_]*gpu.CommandBuffer{command});
 
     core.schedule(.present_frame);
-
-    // update the window title every second
-    if (game.state().title_timer.read() >= 1.0) {
-        game.state().title_timer.reset();
-        try updateWindowTitle(core);
-    }
-}
-
-fn updateWindowTitle(core: *mach.Core.Mod) !void {
-    try core.state().printTitle(
-        core.state().main_window,
-        "core-custom-entrypoint [ {d}fps ] [ Input {d}hz ]",
-        .{
-            // TODO(Core)
-            core.state().frameRate(),
-            core.state().inputRate(),
-        },
-    );
 }

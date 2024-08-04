@@ -3,14 +3,15 @@
     "configurations": [
         {
             "name": "Debug",
-            "type": "cppdbg",
+            "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/zig-out/bin/loop_in_zig.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
+            "externalConsole": false,
             "preLaunchTask": "build"
-        },
+        }
     ]
 }
