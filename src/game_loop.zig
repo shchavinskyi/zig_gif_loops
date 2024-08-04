@@ -38,16 +38,17 @@ fn init(game: *Mod, core: *mach.Core.Mod) !void {
         .targets = &.{color_target},
     });
 
+    // Fragment state describes which shader and entrypoint to use for rendering fragments.
+    const primitive_state = gpu.PrimitiveState{
+        .topology = .triangle_list, // .line_list // .point_list
+    };
+
     // Create our render pipeline that will ultimately get pixels onto the screen.
     const label = @tagName(name) ++ ".init";
-    const pipeline_descriptor = gpu.RenderPipeline.Descriptor{
-        .label = label,
-        .fragment = &fragment,
-        .vertex = gpu.VertexState{
-            .module = shader_module,
-            .entry_point = "vertex_main",
-        },
-    };
+    const pipeline_descriptor = gpu.RenderPipeline.Descriptor{ .label = label, .fragment = &fragment, .vertex = gpu.VertexState{
+        .module = shader_module,
+        .entry_point = "vertex_main",
+    }, .primitive = primitive_state };
     const pipeline = core.state().device.createRenderPipeline(&pipeline_descriptor);
 
     // Store our render pipeline in our module's state, so we can access it later on.

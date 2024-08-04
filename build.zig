@@ -1,4 +1,5 @@
 const std = @import("std");
+const builtin = @import("builtin");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -46,4 +47,11 @@ pub fn build(b: *std.Build) void {
     });
 
     exe.root_module.addImport("mach", mach_dep.module("mach"));
+}
+
+comptime {
+    const supported_zig = std.SemanticVersion.parse("0.13.0-dev.351+64ef45eb0") catch unreachable;
+    if (builtin.zig_version.order(supported_zig) != .eq) {
+        @compileError(std.fmt.comptimePrint("unsupported Zig version ({}).", .{builtin.zig_version}));
+    }
 }
