@@ -11,7 +11,6 @@ pub const systems = .{
     .update = .{ .handler = update },
 };
 
-title_timer: mach.Timer,
 pipeline: *gpu.RenderPipeline,
 
 pub fn deinit(game: *Mod) void {
@@ -53,10 +52,8 @@ fn init(game: *Mod, core: *mach.Core.Mod) !void {
 
     // Store our render pipeline in our module's state, so we can access it later on.
     game.init(.{
-        .title_timer = try mach.Timer.start(),
         .pipeline = pipeline,
     });
-    // try updateWindowTitle(core);
 }
 
 fn update(core: *mach.Core.Mod, game: *Mod) !void {
